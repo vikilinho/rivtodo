@@ -6,20 +6,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final valueProvider = Provider<int>((ref) {
   return 20;
 });
+final counterStateProvider = StateProvider<int>((ref) {
+  return 0;
+});
 
-class HomePage extends ConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Homepage extends ConsumerWidget {
+  const Homepage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
+    var value = ref.watch(valueProvider);
+    var counter = ref.watch(counterStateProvider);
 
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        //access the providerusing ref.read then update the state
+        onPressed: (() => ref.read(counterStateProvider.notifier).state++),
+        child: Icon(Icons.add),
+      ),
+      body: Center(
+        child: Text("value: $value"),
+      ),
+    );
   }
 }
