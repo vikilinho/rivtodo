@@ -17,6 +17,13 @@ class Homepage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final value = ref.watch(valueProvider);
     final counter = ref.watch(counterStateProvider);
+    //we use ref.listen when you wantSometimes we want to push a route, show a dialog, or a SnackBar when a provider state changes.
+    ref.listen<StateController<int>>(counterStateProvider.state,
+        (oldState, newState) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Value is ${newState.state}')),
+      );
+    });
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
