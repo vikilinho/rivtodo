@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final valueProvider = Provider<int>((ref) {
   return 20;
 });
+//You need a state provider for state changes to work.
 final counterStateProvider = StateProvider<int>((ref) {
   return 0;
 });
@@ -15,17 +15,17 @@ class Homepage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var value = ref.watch(valueProvider);
-    var counter = ref.watch(counterStateProvider);
+    final value = ref.watch(valueProvider);
+    final counter = ref.watch(counterStateProvider);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        //access the providerusing ref.read then update the state
+        //access the provider using ref.read then update the state
         onPressed: (() => ref.read(counterStateProvider.notifier).state++),
         child: Icon(Icons.add),
       ),
       body: Center(
-        child: Text("value: $value"),
+        child: Text("value: $counter"),
       ),
     );
   }
